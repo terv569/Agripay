@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Your Cart</h2>
+  {% if items %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Farmer / Farm</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for it in items %}
+          <tr>
+            <td>{{ it.product.name }}</td>
+            <td>{{ it.product.farmer.farm_name|default:it.product.farmer.user.username }}</td>
+            <td>Ksh {{ it.product.price }}</td>
+            <td>{{ it.qty }}</td>
+            <td>Ksh {{ it.subtotal|floatformat:2 }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p><strong>Total:</strong> Ksh {{ total|floatformat:2 }}</p>
+  {% else %}
+    <p>Your cart is empty.</p>
+  {% endif %}
+{% endblock %}

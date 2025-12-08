@@ -1,0 +1,51 @@
+
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Farmers</h2>
+  <div class="mb-3">
+    <a class="btn btn-theme" href="{% url 'farmers:create_product' %}">Create product</a>
+    <a class="btn btn-theme-outline ms-2" href="{% url 'farmers:farmers_index' %}">All Products</a>
+  </div>
+
+  <div class="row mb-4">
+    {% for f in farmers %}
+      <div class="col-md-3">
+        <div class="card mb-3 vibrant-card">
+          {% if f.image %}
+            <img src="{{ f.image.url }}" class="card-img-top" alt="{{ f.user.username }}">
+          {% else %}
+            <img src="https://via.placeholder.com/300x180?text=Farmer" class="card-img-top" alt="No image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ f.user.get_full_name|default:f.user.username }}</h5>
+            <p class="card-text"><strong>Farm:</strong> {{ f.farm_name|default:'(No farm name)' }}</p>
+            <a href="{% url 'farmers:farmer_profile' f.pk %}" class="btn btn-sm btn-theme-outline">View profile</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No farmers yet.</p>
+    {% endfor %}
+  </div>
+
+  <h2>All Products</h2>
+  <div class="row">
+    {% for p in products %}
+      <div class="col-md-4">
+        <div class="card mb-3 vibrant-card">
+          <div class="card-body">
+            <h5>{{ p.name }}</h5>
+            <p>{{ p.description|truncatechars:100 }}</p>
+            <p><small>Farm: <a href="{% url 'farmers:farmer_profile' p.farmer.pk %}">{{ p.farmer.farm_name|default:p.farmer.user.username }}</a></small></p>
+            <a class="btn btn-sm btn-theme-outline" href="{% url 'farmers:edit_product' p.pk %}">Edit</a>
+            <form action="{% url 'farmers:delete_product' p.pk %}" method="post" style="display:inline">{% csrf_token %}
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No products yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
