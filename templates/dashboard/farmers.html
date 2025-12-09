@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Farmers Management</h2>
+<a href="{% url 'dashboard:home' %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Farm Name</th>
+      <th>Products</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for farmer in farmers %}
+    <tr>
+      <td>{{ farmer.id }}</td>
+      <td>{{ farmer.user.username }}</td>
+      <td>{{ farmer.farm_name }}</td>
+      <td>{{ farmer.product_count }}</td>
+      <td>{{ farmer.user.email }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

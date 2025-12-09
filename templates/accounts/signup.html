@@ -3,10 +3,16 @@
 {% block content %}
   <div class="auth-wrapper">
     <div class="auth-card">
-      <h2>Sign up</h2>
+      <div class="text-center mb-4">
+        <i class="bi bi-person-plus-fill text-success" style="font-size: 3rem;"></i>
+      </div>
+      <h2>Create Account</h2>
       <form method="post">{% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-theme">Sign up</button>
+        <button class="btn btn-theme"><i class="bi bi-check-circle me-1"></i>Sign up</button>
+        <p class="text-center mt-3 mb-0">
+          <small>Already have an account? <a href="{% url 'accounts:login' %}" class="text-decoration-none">Login</a></small>
+        </p>
       </form>
     </div>
   </div>

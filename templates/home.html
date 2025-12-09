@@ -4,14 +4,18 @@
   <section class="py-5 hero-section">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-md-6 hero-content">
-          <h1 class="display-5 fw-bold">Welcome to Agripay</h1>
+        <div class="col-md-12 hero-content text-center">
+          <h1 class="display-4 fw-bold mb-3">🌾 Welcome to Agripay</h1>
           <p class="lead">Connect farmers directly to customers — fresh produce, fair prices.</p>
-          <p>Discover local farms, browse available products, or start selling your harvest today.</p>
-          <p>
-            <a class="btn btn-theme btn-lg me-2" href="{% url 'marketplace:marketplace_index' %}">Browse Marketplace</a>
-            <a class="btn btn-theme-outline btn-lg" href="{% url 'accounts:signup' %}">Sell as Farmer</a>
-          </p>
+          <p class="mb-4">Discover local farms, browse available products, or start selling your harvest today.</p>
+          <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a class="btn btn-theme btn-lg" href="{% url 'marketplace:marketplace_index' %}">
+              <i class="bi bi-shop me-2"></i>Browse Marketplace
+            </a>
+            <a class="btn btn-theme-outline btn-lg" href="{% url 'accounts:signup' %}">
+              <i class="bi bi-person-plus me-2"></i>Sell as Farmer
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -21,31 +25,86 @@
     <div class="container">
       <div class="row g-4">
         <div class="col-md-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">Fresh Products</h5>
-              <p class="card-text">Find seasonal produce from verified local farmers.</p>
-              <a href="{% url 'marketplace:marketplace_index' %}" class="stretched-link text-decoration-none">Explore</a>
+          <div class="stat-card text-center">
+            <div class="stat-icon mx-auto" style="background: linear-gradient(135deg, #10b981, #059669);">
+              <i class="bi bi-basket2 text-white"></i>
             </div>
+            <h5 class="card-title">Fresh Products</h5>
+            <p class="card-text text-muted">Find seasonal produce from verified local farmers.</p>
+            <a href="{% url 'marketplace:marketplace_index' %}" class="btn btn-theme">
+              <i class="bi bi-arrow-right me-1"></i>Explore
+            </a>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">Sell Easily</h5>
-              <p class="card-text">Create a farmer profile and list your products in minutes.</p>
-              <a href="{% url 'accounts:signup' %}" class="stretched-link text-decoration-none">Get started</a>
+          <div class="stat-card text-center">
+            <div class="stat-icon mx-auto" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+              <i class="bi bi-shop-window text-white"></i>
             </div>
+            <h5 class="card-title">Sell Easily</h5>
+            <p class="card-text text-muted">Create a farmer profile and list your products in minutes.</p>
+            <a href="{% url 'accounts:signup' %}" class="btn btn-theme">
+              <i class="bi bi-arrow-right me-1"></i>Get started
+            </a>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">Secure Checkout</h5>
-              <p class="card-text">Simple cart and checkout flow — we keep transactions straightforward.</p>
-              <a href="{% url 'marketplace:cart' %}" class="stretched-link text-decoration-none">View cart</a>
+          <div class="stat-card text-center">
+            <div class="stat-icon mx-auto" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+              <i class="bi bi-shield-check text-white"></i>
+            </div>
+            <h5 class="card-title">Secure Checkout</h5>
+            <p class="card-text text-muted">Simple cart and checkout flow — we keep transactions straightforward.</p>
+            <a href="{% url 'marketplace:cart' %}" class="btn btn-theme">
+              <i class="bi bi-cart3 me-1"></i>View cart
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-5" style="margin: 3rem -100vw; padding-left: 100vw !important; padding-right: 100vw !important; background: linear-gradient(135deg, #fef3c7 0%, #fef9e7 100%); border-top: 3px solid #f59e0b; border-bottom: 3px solid #f59e0b;">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="d-inline-block">Why Choose Agripay?</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-3 text-center">
+          <div class="mb-3">
+            <div class="stat-icon mx-auto" style="background: #dcfce7;">
+              <i class="bi bi-truck text-success"></i>
             </div>
           </div>
+          <h6>Direct from Farm</h6>
+          <p class="small text-muted">No middlemen, better prices</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="mb-3">
+            <div class="stat-icon mx-auto" style="background: #dbeafe;">
+              <i class="bi bi-award text-primary"></i>
+            </div>
+          </div>
+          <h6>Quality Assured</h6>
+          <p class="small text-muted">Verified farmers only</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="mb-3">
+            <div class="stat-icon mx-auto" style="background: #fef3c7;">
+              <i class="bi bi-lightning-charge text-warning"></i>
+            </div>
+          </div>
+          <h6>Fast Delivery</h6>
+          <p class="small text-muted">Fresh to your door</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="mb-3">
+            <div class="stat-icon mx-auto" style="background: #269e74;">
+              <i class="bi bi-heart text-danger"></i>
+            </div>
+          </div>
+          <h6>Support Local</h6>
+          <p class="small text-muted">Empower communities</p>
         </div>
       </div>
     </div>

@@ -1,31 +1,97 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Your Cart</h2>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-cart3 me-2"></i>Your Cart</h2>
+    <a href="{% url 'marketplace:marketplace_index' %}" class="btn btn-theme-outline">
+      <i class="bi bi-arrow-left me-1"></i>Continue Shopping
+    </a>
+  </div>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>{{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
   {% if items %}
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Farmer / Farm</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div class="row">
+      <div class="col-lg-8">
         {% for it in items %}
-          <tr>
-            <td>{{ it.product.name }}</td>
-            <td>{{ it.product.farmer.farm_name|default:it.product.farmer.user.username }}</td>
-            <td>Ksh {{ it.product.price }}</td>
-            <td>{{ it.qty }}</td>
-            <td>Ksh {{ it.subtotal|floatformat:2 }}</td>
-          </tr>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h5 class="mb-1"><i class="bi bi-box-seam me-1"></i>{{ it.product.name }}</h5>
+                  <p class="text-muted small mb-0">
+                    <i class="bi bi-shop me-1"></i>{{ it.product.farmer.farm_name|default:it.product.farmer.user.username }}
+                  </p>
+                </div>
+                <div class="col-md-2 text-center">
+                  <small class="text-muted">Price</small>
+                  <p class="mb-0 fw-bold">Ksh {{ it.product.price }}</p>
+                </div>
+                <div class="col-md-2 text-center">
+                  <small class="text-muted">Qty</small>
+                  <p class="mb-0 fw-bold">{{ it.qty }}</p>
+                </div>
+                <div class="col-md-2 text-end">
+                  <small class="text-muted">Subtotal</small>
+                  <p class="mb-0 fw-bold text-success">Ksh {{ it.subtotal|floatformat:2 }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         {% endfor %}
-      </tbody>
-    </table>
-    <p><strong>Total:</strong> Ksh {{ total|floatformat:2 }}</p>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Order Summary</h5>
+            <hr>
+            <div class="d-flex justify-content-between mb-3">
+              <span>Total Items:</span>
+              <strong>{{ items|length }}</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <h5>Total:</h5>
+              <h5 class="text-success">Ksh {{ total|floatformat:2 }}</h5>
+            </div>
+            {% if user.is_authenticated %}
+              <form method="post" action="{% url 'payments:initiate_payment' %}">
+                {% csrf_token %}
+                <input type="hidden" name="amount" value="{{ total }}">
+                <div class="mb-3">
+                  <label for="phone_number" class="form-label">
+                    <i class="bi bi-phone me-1"></i>Phone Number
+                  </label>
+                  <input type="text" name="phone_number" id="phone_number" class="form-control" placeholder="254712345678" required>
+                  <small class="text-muted">Format: 254XXXXXXXXX</small>
+                </div>
+                <button type="submit" class="btn btn-theme w-100">
+                  <i class="bi bi-credit-card me-1"></i>Checkout with M-Pesa
+                </button>
+                <div class="alert alert-info mt-3 small mb-0">
+                  <i class="bi bi-info-circle me-1"></i>Sandbox: Use 254708374149
+                </div>
+              </form>
+            {% else %}
+              <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle me-2"></i>Please <a href="{% url 'accounts:login' %}" class="alert-link">login</a> to checkout.
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
   {% else %}
-    <p>Your cart is empty.</p>
+    <div class="text-center py-5">
+      <i class="bi bi-cart-x" style="font-size: 4rem; color: #d1d5db;"></i>
+      <h3 class="mt-3">Your cart is empty</h3>
+      <p class="text-muted">Start adding products to your cart!</p>
+      <a href="{% url 'marketplace:marketplace_index' %}" class="btn btn-theme mt-3">
+        <i class="bi bi-shop me-1"></i>Browse Marketplace
+      </a>
+    </div>
   {% endif %}
 {% endblock %}

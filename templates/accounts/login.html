@@ -2,20 +2,28 @@
 {% block content %}
   <div class="auth-wrapper">
     <div class="auth-card">
-      <h2>Login</h2>
+      <div class="text-center mb-4">
+        <i class="bi bi-person-circle text-success" style="font-size: 3rem;"></i>
+      </div>
+      <h2>Welcome Back</h2>
       <form method="post">{% csrf_token %}
         {% if form.errors %}
-          <div class="alert alert-danger">Please correct the error below.</div>
+          <div class="alert alert-danger">
+            <i class="bi bi-exclamation-circle me-2"></i>Please correct the errors below.
+          </div>
         {% endif %}
         <div class="mb-3">
-          <label for="id_username" class="form-label">Username</label>
+          <label for="id_username" class="form-label"><i class="bi bi-person me-1"></i>Username</label>
           {{ form.username }}
         </div>
         <div class="mb-3">
-          <label for="id_password" class="form-label">Password</label>
+          <label for="id_password" class="form-label"><i class="bi bi-lock me-1"></i>Password</label>
           {{ form.password }}
         </div>
-        <button class="btn btn-theme">Login</button>
+        <button class="btn btn-theme"><i class="bi bi-box-arrow-in-right me-1"></i>Login</button>
+        <p class="text-center mt-3 mb-0">
+          <small>Don't have an account? <a href="{% url 'accounts:signup' %}" class="text-decoration-none">Sign up</a></small>
+        </p>
       </form>
     </div>
   </div>

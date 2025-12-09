@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Products Management</h2>
+<a href="{% url 'dashboard:home' %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Farmer</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.id }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.farmer.farm_name|default:product.farmer.user.username }}</td>
+      <td>Ksh {{ product.price }}</td>
+      <td>{{ product.quantity }}</td>
+      <td>{{ product.created_at|date:"Y-m-d" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

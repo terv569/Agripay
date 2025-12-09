@@ -1,34 +1,66 @@
 
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Marketplace</h2>
-  <div class="row">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <h2 class="mb-0"><i class="bi bi-shop me-2"></i>Marketplace</h2>
+    <div class="d-flex gap-2 align-items-center">
+      <div class="search-box" style="width: 250px;">
+        <i class="bi bi-search"></i>
+        <input type="text" class="form-control" placeholder="Search products..." id="searchInput">
+      </div>
+      <a href="{% url 'marketplace:cart' %}" class="btn btn-theme-outline">
+        <i class="bi bi-cart3 me-1"></i>Cart
+      </a>
+    </div>
+  </div>
+  <div class="row g-4">
     {% for p in products %}
-      <div class="col-md-4">
-        <div class="card mb-3 vibrant-card">
-          {% if p.image %}
-            <img src="{{ p.image.url }}" class="card-img-top" alt="{{ p.name }}">
-          {% else %}
-            <img src="https://picsum.photos/seed/{{ p.name|urlencode }}/600/400" class="card-img-top" alt="{{ p.name }}">
-          {% endif %}
-          <div class="card-body">
-            <h5>{{ p.name }}</h5>
-            <p>{{ p.description|truncatechars:200 }}</p>
-            <p><strong>Price:</strong> Ksh {{ p.price }}</p>
-            <p><strong>Quantity available:</strong> {{ p.quantity }}</p>
-            <p><strong>Farmer / Farm:</strong>
-              <a href="{% url 'farmers:farmer_profile' p.farmer.pk %}">
-                {{ p.farmer.farm_name|default:p.farmer.user.username }}
-              </a>
-            </p>
-            <form method="post" action="{% url 'marketplace:add_to_cart' p.pk %}">{% csrf_token %}
-              <button class="btn btn-theme">Add to Cart</button>
-            </form>
+      <div class="col-md-4 col-lg-3 product-item" data-name="{{ p.name|lower }}">
+        <div class="card h-100 vibrant-card">
+          <div style="position: relative;">
+            {% if p.image %}
+              <img src="{{ p.image.url }}" class="card-img-top" alt="{{ p.name }}">
+            {% else %}
+              <img src="https://picsum.photos/seed/{{ p.name|urlencode }}/600/400" class="card-img-top" alt="{{ p.name }}">
+            {% endif %}
+            <span class="product-badge"><i class="bi bi-star-fill me-1"></i>Fresh</span>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title"><i class="bi bi-box-seam me-1"></i>{{ p.name }}</h5>
+            <p class="card-text small mb-2">{{ p.description|truncatechars:100 }}</p>
+            <div class="mt-auto">
+              <div class="mb-3">
+                <span class="price-tag"><i class="bi bi-currency-exchange me-1"></i>Ksh {{ p.price }}</span>
+                <span class="badge bg-light text-dark ms-2"><i class="bi bi-box"></i> {{ p.quantity }} left</span>
+              </div>
+              <p class="small mb-3">
+                <i class="bi bi-person-badge me-1"></i>
+                <a href="{% url 'farmers:farmer_profile' p.farmer.pk %}" class="text-decoration-none">
+                  {{ p.farmer.farm_name|default:p.farmer.user.username }}
+                </a>
+              </p>
+              <form method="post" action="{% url 'marketplace:add_to_cart' p.pk %}" class="add-to-cart-form">{% csrf_token %}
+                <button type="submit" class="btn btn-theme w-100"><i class="bi bi-cart-plus me-1"></i>Add to Cart</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     {% empty %}
-      <p>No products.</p>
+      <div class="col-12">
+        <div class="alert alert-info text-center">
+          <i class="bi bi-info-circle me-2"></i>No products available at the moment.
+        </div>
+      </div>
     {% endfor %}
   </div>
+  <script>
+    document.getElementById('searchInput')?.addEventListener('input', function(e) {
+      const search = e.target.value.toLowerCase();
+      document.querySelectorAll('.product-item').forEach(item => {
+        const name = item.dataset.name;
+        item.style.display = name.includes(search) ? '' : 'none';
+      });
+    });
+  </script>
 {% endblock %}

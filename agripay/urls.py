@@ -8,9 +8,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.home, name='home'),
     path('admin/', admin.site.urls),
+    path('dashboard/', include('dashboard.urls')),
     path('accounts/', include('accounts.urls')),
     path('farmers/', include('farmers.urls')),
     path('marketplace/', include('marketplace.urls')),
+    path('payments/', include('payments.urls')),
 ]
 
 if settings.DEBUG:

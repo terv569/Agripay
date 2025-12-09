@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Users Management</h2>
+<a href="{% url 'dashboard:home' %}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Staff</th>
+      <th>Active</th>
+      <th>Date Joined</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>{% if user.is_staff %}✓{% else %}✗{% endif %}</td>
+      <td>{% if user.is_active %}✓{% else %}✗{% endif %}</td>
+      <td>{{ user.date_joined|date:"Y-m-d H:i" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -7,7 +7,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin','django.contrib.auth','django.contrib.contenttypes',
     'django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles',
-    'accounts','farmers','marketplace',
+    'accounts','farmers','marketplace','payments',
 ]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MIDDLEWARE = [
@@ -52,4 +52,11 @@ MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Daraja API Settings (Sandbox)
+DARAJA_CONSUMER_KEY = 'yv5rFJCoqXFUX3qsG5hxyjml4Ko39AzLHRhwtzfb5fJrQq4k'
+DARAJA_CONSUMER_SECRET = 'V9fJFGcGTbiRnXRCsMoujkbqIQyo9bBPlY0tmTIIUjdi6PxrAFXwr5PozjVTjsF9'
+DARAJA_SHORTCODE = '174379'
+DARAJA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+DARAJA_ENVIRONMENT = 'sandbox'  # Change to 'production' for live
 
